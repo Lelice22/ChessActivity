@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
-
 namespace BoardG
+
 {
     internal class Position
     {
