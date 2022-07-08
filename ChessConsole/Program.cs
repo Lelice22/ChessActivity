@@ -9,6 +9,7 @@ namespace ChessConsole
     {
         static void Main(string[] args)
         {
+            /*
             try
             {
                 Board board = new Board(8, 8);
@@ -24,6 +25,11 @@ namespace ChessConsole
             {
                 Console.WriteLine(e.Message);
             }
+            */
+            ChessPosition position = new ChessPosition('a', 9);
+
+            Console.WriteLine(position);
+            Console.WriteLine(position.ChesstoMatrix());
             
         }
     }
