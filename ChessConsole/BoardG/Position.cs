@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace Board
+namespace BoardG
 {
     internal class Position
     {
