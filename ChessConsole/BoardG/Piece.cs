@@ -19,5 +19,6 @@ namespace BoardG
             NumberofMovements = 0;
 
         }
+   
     }
 }

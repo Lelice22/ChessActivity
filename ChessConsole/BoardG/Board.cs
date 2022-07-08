@@ -7,13 +7,18 @@ namespace BoardG
     {
         public int Rows { get; set; }
         public int Columns { get; set; }
-        private Piece[,] Piece;
+        private Piece[,] Pieces;
 
         public Board(int rows, int columns)
         {
             Rows = rows;
             Columns = columns;
-            Piece = new Piece[rows, columns];
+            Pieces = new Piece[rows, columns];
+        }
+
+        public Piece piece(int row, int column)
+        {
+            return Pieces[row, column];
         }
     }
 }

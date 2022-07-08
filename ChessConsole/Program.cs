@@ -9,6 +9,7 @@ namespace ChessConsole
         {
             Board board = new Board(8, 8);
             Console.WriteLine( "Generated");
+            Screen.ShowBoard(board);
         }
     }
 }
