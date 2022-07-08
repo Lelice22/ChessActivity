@@ -9,15 +9,15 @@ namespace ChessConsole
     {
         static void Main(string[] args)
         {
-            /*
+            
             try
             {
                 Board board = new Board(8, 8);
                 //Console.WriteLine("Generated");
                 board.SetPiece(new Rook(PieceColor.Black, board), new Position(0, 0));
                 board.SetPiece(new Rook(PieceColor.Black, board), new Position(1, 3));
-                board.SetPiece(new King(PieceColor.Black, board), new Position(2, 4));
-                board.SetPiece(new King(PieceColor.Black, board), new Position(0, 9));
+                board.SetPiece(new King(PieceColor.White, board), new Position(2, 4));
+                board.SetPiece(new King(PieceColor.White, board), new Position(0, 2));
 
                 Screen.ShowBoard(board);
             }
@@ -25,12 +25,12 @@ namespace ChessConsole
             {
                 Console.WriteLine(e.Message);
             }
-            */
+            /*
             ChessPosition position = new ChessPosition('a', 9);
 
             Console.WriteLine(position);
             Console.WriteLine(position.ChesstoMatrix());
-            
+            */
         }
     }
 }
