@@ -13,9 +13,18 @@ namespace ChessConsole
             try
             {
                 ChessMatch match = new ChessMatch();
-                
-                
-                Screen.ShowBoard(match.board);
+
+                while (!match.Fininshed)
+                {
+                    Console.Clear();
+                    Screen.ShowBoard(match.board);
+                    Console.Write("Origin: ");
+                    Position origin = Screen.ReadChessPosition().ChesstoMatrix();
+                    Console.Write("Final position: ");
+                    Position final = Screen.ReadChessPosition().ChesstoMatrix();
+
+                    match.MakeMove(origin, final);
+                }
 
             }
             catch (ExceptionBoard e)
