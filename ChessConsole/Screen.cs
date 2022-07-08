@@ -28,7 +28,7 @@ namespace ChessConsole
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine(" a b c d e f g h");
+            Console.WriteLine("  a b c d e f g h");
         }
         public static void ShowPiece(Piece piece)
         {
@@ -39,7 +39,7 @@ namespace ChessConsole
             else
             {
                 ConsoleColor aux = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Write(piece);
                 Console.ForegroundColor = aux;
             }

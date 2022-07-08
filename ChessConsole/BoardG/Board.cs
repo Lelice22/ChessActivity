@@ -35,6 +35,17 @@ namespace BoardG
             piece.position = position;
         }
 
+        public Piece RemovePiece(Position position)
+        {
+            if (piece(position) == null)
+            {
+                return null;
+            }
+            Piece aux = piece(position);
+            aux.position = null;
+            Pieces[position.Row, position.Column] = null;
+            return aux;
+        }
         public bool PieceinPosition(Position position)
         {
             ValidatePosition(position);

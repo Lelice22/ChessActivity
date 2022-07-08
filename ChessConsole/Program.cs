@@ -12,14 +12,11 @@ namespace ChessConsole
             
             try
             {
-                Board board = new Board(8, 8);
-                //Console.WriteLine("Generated");
-                board.SetPiece(new Rook(PieceColor.Black, board), new Position(0, 0));
-                board.SetPiece(new Rook(PieceColor.Black, board), new Position(1, 3));
-                board.SetPiece(new King(PieceColor.White, board), new Position(2, 4));
-                board.SetPiece(new King(PieceColor.White, board), new Position(0, 2));
+                ChessMatch match = new ChessMatch();
+                
+                
+                Screen.ShowBoard(match.board);
 
-                Screen.ShowBoard(board);
             }
             catch (ExceptionBoard e)
             {

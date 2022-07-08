@@ -19,6 +19,10 @@ namespace BoardG
             NumberofMovements = 0;
 
         }
+        public void AddNumberOfMovements()
+        {
+            NumberofMovements++;
+        }
    
     }
 }
