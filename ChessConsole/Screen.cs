@@ -17,6 +17,17 @@ namespace ChessConsole
             ShowCapturedPieces(match);
             Console.WriteLine($"Shift: {match.Shift}");
             Console.WriteLine($"Awayting for move : {match.PresentPlayer}");
+            Console.WriteLine();
+
+            if (match.Check)
+            {
+                Console.WriteLine("------------------------------------");
+                Console.WriteLine($"Aware now! You, {match.PresentPlayer}, are in check!");
+                Console.WriteLine("------------------------------------");
+                Console.WriteLine();
+            }
+
+            
         }
 
         public static void ShowCapturedPieces(ChessMatch match)

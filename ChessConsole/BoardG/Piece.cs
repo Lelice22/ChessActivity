@@ -23,6 +23,10 @@ namespace BoardG
         {
             NumberofMovements++;
         }
+        public void SubtractNumberOfMovements()
+        {
+            NumberofMovements++;
+        }
         public bool AnyPossibleMovements()
         {
             bool[,] mat = PossibleMovements(position);

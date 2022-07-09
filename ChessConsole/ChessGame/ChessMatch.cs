@@ -12,6 +12,7 @@ namespace ChessGame
         public bool Fininshed { get; private set; }
         private HashSet<Piece> pieces;
         private HashSet<Piece> Captured;
+        public bool Check { get; private set; }
 
         public ChessMatch()
         {
@@ -21,10 +22,11 @@ namespace ChessGame
             Fininshed = false;
             pieces = new HashSet<Piece>();
             Captured = new HashSet<Piece>();
+            Check = false;
             SetPiece();
         }
 
-        public void MakeMove(Position origin, Position final)
+        public Piece MakeMove(Position origin, Position final)
         {
             Piece piece = board.RemovePiece(origin);
             piece.AddNumberOfMovements();
@@ -34,11 +36,40 @@ namespace ChessGame
             {
                 Captured.Add(capturedPiece);
             }
+            return capturedPiece;
         }
-        
+
+        public void UndoMovement(Position origin, Position final, Piece capturePiece)
+        {
+            
+            Piece piece = board.RemovePiece(final);
+            piece.SubtractNumberOfMovements();
+            if (capturePiece != null)
+            {
+                board.SetPiece(capturePiece, final);
+                Captured.Remove(capturePiece);
+            }
+
+            Piece capturedPiece = board.RemovePiece(origin);
+            board.SetPiece(piece, origin);
+        }
         public void MakePlay(Position origin, Position final)
         {
-            MakeMove(origin, final);
+            Piece capturedPiece = MakeMove(origin, final);
+
+            if (InCheck(PresentPlayer))
+            {
+                UndoMovement(origin, final, capturedPiece);
+                throw new ExceptionBoard("You shall not set your king in such danger.");
+            }
+            if (InCheck(Opponent(PresentPlayer)))
+            {
+                Check = true;
+            }
+            else
+            {
+                Check = false;
+            }
             Shift++;
             changePlayer();
         }
@@ -102,6 +133,49 @@ namespace ChessGame
             aux.ExceptWith(capturedPieces(color));
             return aux;
         }
+        public PieceColor Opponent(PieceColor color)
+        {
+            if (color == PieceColor.Black)
+            {
+                return PieceColor.White;
+            }
+            else
+            {
+                return PieceColor.Black;
+            }
+        }
+        private Piece king(PieceColor color)
+        {
+            foreach (Piece x in AvailablePieces(color))
+            {
+                if (x is King)
+                {
+                    return x;
+                }
+            }
+            return null;
+        }
+
+        public bool InCheck(PieceColor color)
+        {
+            Piece k = king(color);
+            if (k == null)
+            {
+                throw new ExceptionBoard($"There is no {color} king in this match.");
+
+            }
+            foreach (Piece x in AvailablePieces(Opponent(color)))
+            {
+                bool[,] mat = x.PossibleMovements(x.position);
+                if (mat[k.position.Row, k.position.Column])
+                {
+                    return true;
+                }
+
+            }
+            return false;
+        }
+
         public void SetNewPiece(char column, int row, Piece piece)
         {
             board.SetPiece(piece, new ChessPosition(column, row).ChesstoMatrix());

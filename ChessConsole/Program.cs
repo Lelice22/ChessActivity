@@ -34,8 +34,9 @@ namespace ChessConsole
                         Console.Write("Final position: ");
                         Position final = Screen.ReadChessPosition().ChesstoMatrix();
                         match.ValidateFinalPosition(origin, final);
-
+                        Console.WriteLine();
                         match.MakePlay(origin, final);
+
                     }
                     catch (ExceptionBoard e)
                     {
