@@ -16,15 +16,25 @@ namespace ChessConsole
             Console.WriteLine();
             ShowCapturedPieces(match);
             Console.WriteLine($"Shift: {match.Shift}");
-            Console.WriteLine($"Awayting for move : {match.PresentPlayer}");
-            Console.WriteLine();
-
-            if (match.Check)
+            if (!match.Fininshed)
             {
-                Console.WriteLine("------------------------------------");
-                Console.WriteLine($"Aware now! You, {match.PresentPlayer}, are in check!");
-                Console.WriteLine("------------------------------------");
+                Console.WriteLine($"Awayting for move : {match.PresentPlayer}");
                 Console.WriteLine();
+
+                if (match.Check)
+                {
+                    Console.WriteLine("------------------------------------");
+                    Console.WriteLine($"Aware now! You, {match.PresentPlayer}, are in check!");
+                    Console.WriteLine("------------------------------------");
+                    Console.WriteLine();
+                }
+            }
+            else
+            {
+                Console.WriteLine("-----------------");
+                Console.WriteLine("End of the Match,");
+                Console.WriteLine($"{match.PresentPlayer} CheckMate!");
+                Console.WriteLine("-----------------");
             }
 
             

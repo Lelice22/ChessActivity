@@ -44,18 +44,16 @@ namespace ChessConsole
                         Console.ReadLine();
                     }
                 }
+                Console.Clear();
+                Screen.ShowMatch(match);
+
+
 
             }
             catch (ExceptionBoard e)
             {
                 Console.WriteLine(e.Message);
             }
-            /*
-            ChessPosition position = new ChessPosition('a', 9);
-
-            Console.WriteLine(position);
-            Console.WriteLine(position.ChesstoMatrix());
-            */
         }
     }
 }
