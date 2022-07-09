@@ -19,10 +19,7 @@ namespace ChessConsole
                     try
                     {
                         Console.Clear();
-                        Screen.ShowBoardBegin(match.board);
-                        Console.WriteLine();
-                        Console.WriteLine($"Shift: {match.Shift}");
-                        Console.WriteLine($"Awayting for move : {match.PresentPlayer}");
+                        Screen.ShowMatch(match);
 
                         Console.WriteLine();
                         Console.Write("Origin: ");

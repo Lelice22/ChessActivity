@@ -43,10 +43,10 @@ namespace BoardG
             Piece piece = board.piece(position);
             return piece == null || piece.Color != Color;
         }
-        public bool PossibleMove(Position position)
+        public bool PossibleMove(Position origin, Position final)
         {
-            //Recheck.. it seems weirdly redundant
-            return PossibleMovements(position)[position.Row, position.Column];
+            //Oddly redundant
+            return PossibleMovements(origin)[final.Row, final.Column]; //check if final is into checked feasibilities
         }
         public abstract bool[,] PossibleMovements(Position position);
    

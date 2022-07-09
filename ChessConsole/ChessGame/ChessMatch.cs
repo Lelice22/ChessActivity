@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using BoardG;
 using BoardG.Enums;
 
@@ -10,6 +10,8 @@ namespace ChessGame
         public int Shift { get; private set; }
         public PieceColor PresentPlayer { get; private set; }
         public bool Fininshed { get; private set; }
+        private HashSet<Piece> pieces;
+        private HashSet<Piece> Captured;
 
         public ChessMatch()
         {
@@ -17,6 +19,8 @@ namespace ChessGame
             Shift = 1;
             PresentPlayer = PieceColor.White;
             Fininshed = false;
+            pieces = new HashSet<Piece>();
+            Captured = new HashSet<Piece>();
             SetPiece();
         }
 
@@ -26,6 +30,10 @@ namespace ChessGame
             piece.AddNumberOfMovements();
             Piece capturedPiece = board.RemovePiece(final);
             board.SetPiece(piece, final);
+            if (capturedPiece != null)
+            {
+                Captured.Add(capturedPiece);
+            }
         }
         
         public void MakePlay(Position origin, Position final)
@@ -51,7 +59,7 @@ namespace ChessGame
         }
         public void ValidateFinalPosition(Position origin, Position final)
         {
-            if (!board.piece(origin).PossibleMove(final))
+            if (!board.piece(origin).PossibleMove(origin, final))
             {
                 throw new ExceptionBoard("This move is ilegal.");
             }
@@ -67,15 +75,44 @@ namespace ChessGame
                 PresentPlayer = PieceColor.Black;
             }
         }
+
+        public HashSet<Piece> capturedPieces(PieceColor color)
+        {
+            HashSet<Piece> aux = new HashSet<Piece>();
+            foreach (Piece x in Captured)
+            {
+                if (x.Color == color)
+                {
+                    aux.Add(x);
+                }
+            }
+            return aux;
+        }
+
+        public HashSet<Piece> AvailablePieces(PieceColor color)
+        {
+            HashSet<Piece> aux = new HashSet<Piece>();
+            foreach (Piece x in pieces)
+            {
+                if (x.Color == color)
+                {
+                    aux.Add(x);
+                }
+            }
+            aux.ExceptWith(capturedPieces(color));
+            return aux;
+        }
+        public void SetNewPiece(char column, int row, Piece piece)
+        {
+            board.SetPiece(piece, new ChessPosition(column, row).ChesstoMatrix());
+            pieces.Add(piece);
+        }
         private void SetPiece()
         {
-            board.SetPiece(new Rook(PieceColor.Black, board), new ChessPosition('c', 1).ChesstoMatrix());
-            board.SetPiece(new King(PieceColor.White, board), new ChessPosition('h', 8).ChesstoMatrix());
-            board.SetPiece(new King(PieceColor.Black, board), new ChessPosition('a', 4).ChesstoMatrix());
-            board.SetPiece(new Rook(PieceColor.White, board), new ChessPosition('h', 7).ChesstoMatrix());
-            board.SetPiece(new Rook(PieceColor.White, board), new ChessPosition('g', 8).ChesstoMatrix());
-            board.SetPiece(new Rook(PieceColor.White, board), new ChessPosition('g', 7).ChesstoMatrix());
-
+            SetNewPiece('c', 1, new Rook(PieceColor.Black, board));
+            SetNewPiece('c', 2, new Rook(PieceColor.White, board));
+            SetNewPiece('h', 4, new King(PieceColor.Black, board));
+            SetNewPiece('g', 8, new King(PieceColor.White, board));
 
         }
     }

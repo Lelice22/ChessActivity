@@ -10,6 +10,38 @@ namespace ChessConsole
     internal class Screen
     {
         //showing board concerns to screen, therefore it wil be setted in a screen Class
+        public static void ShowMatch(ChessMatch match)
+        {
+            ShowBoardBegin(match.board);
+            Console.WriteLine();
+            ShowCapturedPieces(match);
+            Console.WriteLine($"Shift: {match.Shift}");
+            Console.WriteLine($"Awayting for move : {match.PresentPlayer}");
+        }
+
+        public static void ShowCapturedPieces(ChessMatch match)
+        {
+            Console.WriteLine("Captured pieces: ");
+            Console.WriteLine("White: ");
+            ShowSet(match.capturedPieces(PieceColor.White));
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("Black: ");
+            ShowSet(match.capturedPieces(PieceColor.Black));
+            Console.ForegroundColor = aux;
+            Console.WriteLine();
+        }
+
+        public static void ShowSet(HashSet<Piece> set)
+        {
+            Console.Write("[");
+            foreach (Piece piece in set)
+            {
+                Console.Write($"{piece} ");
+            }
+            Console.WriteLine("]");
+            Console.WriteLine();
+        }
         public static void ShowBoardBegin(Board board)
         {
             for (int i = 0; i < board.Rows; i++)
