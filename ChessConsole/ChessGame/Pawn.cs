@@ -20,36 +20,52 @@ namespace ChessGame
             //Upprightway
             if (Color == PieceColor.White)
             {
-                Position pos = new Position(position.Row - 1, position.Column);
-                if (board.piece(pos) == null && board.ValidPosition(pos))
+                int treshold = -2;
+                if (NumberofMovements == 0 && board.piece(new Position(position.Row - 1, position.Column)) == null)
                 {
-                    mat[pos.Row, pos.Column] = true;
+                    treshold = -3;
                 }
-                for (int i = -1; i < 2; i += 2)
+                for (int j = -1; j > treshold; j--)
                 {
-                    Position pos2 = new Position(position.Row - 1, position.Column + i);
-                    if (board.ValidPosition(pos2) && (board.piece(pos2) != null && board.piece(pos2).Color != Color))
+                    Position pos = new Position(position.Row + j, position.Column);
+                    if (board.piece(pos) == null && board.ValidPosition(pos))
                     {
-                        mat[pos2.Row, pos2.Column] = true;
+                        mat[pos.Row, pos.Column] = true;
+                    }
+                    for (int i = -1; i < 2; i += 2)
+                    {
+                        Position pos2 = new Position(position.Row - 1, position.Column + i);
+                        if (board.ValidPosition(pos2) && (board.piece(pos2) != null && board.piece(pos2).Color != Color))
+                        {
+                            mat[pos2.Row, pos2.Column] = true;
 
+                        }
                     }
                 }
 
             }
             else
             {
-                Position pos = new Position(position.Row + 1, position.Column);
-                if (board.piece(pos) == null && board.ValidPosition(pos))
+                int treshold = + 2;
+                if (NumberofMovements == 0 && board.piece(new Position(position.Row + 1, position.Column)) == null)
                 {
-                    mat[pos.Row, pos.Column] = true;
+                    treshold = + 3;
                 }
-                for (int i = -1; i < 2; i += 2)
+                for (int j = 1; j < treshold; j++)
                 {
-                    Position pos2 = new Position(position.Row + 1, position.Column + i);
-                    if (board.ValidPosition(pos2) && (board.piece(pos2) != null && board.piece(pos2).Color != Color))
+                    Position pos = new Position(position.Row + j, position.Column);
+                    if (board.piece(pos) == null && board.ValidPosition(pos))
                     {
-                        mat[pos2.Row, pos2.Column] = true;
+                        mat[pos.Row, pos.Column] = true;
+                    }
+                    for (int i = -1; i < 2; i += 2)
+                    {
+                        Position pos2 = new Position(position.Row + 1, position.Column + i);
+                        if (board.ValidPosition(pos2) && (board.piece(pos2) != null && board.piece(pos2).Color != Color))
+                        {
+                            mat[pos2.Row, pos2.Column] = true;
 
+                        }
                     }
                 }
             }
