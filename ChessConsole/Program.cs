@@ -18,7 +18,7 @@ namespace ChessConsole
                 {
                     try
                     {
-                        Console.Clear();
+                        //Console.Clear();
                         Screen.ShowMatch(match);
 
                         Console.WriteLine();
@@ -28,7 +28,7 @@ namespace ChessConsole
 
                         bool[,] possiblemovements = match.board.piece(origin).PossibleMovements(origin);
 
-                        Console.Clear();
+                        //Console.Clear();
                         Screen.ShowBoard(match.board, possiblemovements);
 
                         Console.Write("Final position: ");

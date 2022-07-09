@@ -20,15 +20,14 @@ namespace ChessGame
             //Upprightway
             if (Color == PieceColor.White)
             {
-                int row = position.Row - 1;
-                Position pos = new Position(row, position.Column);
+                Position pos = new Position(position.Row - 1, position.Column);
                 if (board.piece(pos) == null && board.ValidPosition(pos))
                 {
                     mat[pos.Row, pos.Column] = true;
                 }
                 for (int i = -1; i < 2; i += 2)
                 {
-                    Position pos2 = new Position(row, position.Column + i);
+                    Position pos2 = new Position(position.Row - 1, position.Column + i);
                     if (board.ValidPosition(pos2) && (board.piece(pos2) != null && board.piece(pos2).Color != Color))
                     {
                         mat[pos2.Row, pos2.Column] = true;
@@ -39,15 +38,14 @@ namespace ChessGame
             }
             else
             {
-                int row = position.Row + 1;
-                Position pos = new Position(row, position.Column);
+                Position pos = new Position(position.Row + 1, position.Column);
                 if (board.piece(pos) == null && board.ValidPosition(pos))
                 {
                     mat[pos.Row, pos.Column] = true;
                 }
                 for (int i = -1; i < 2; i += 2)
                 {
-                    Position pos2 = new Position(row, position.Column + i);
+                    Position pos2 = new Position(position.Row + 1, position.Column + i);
                     if (board.ValidPosition(pos2) && (board.piece(pos2) != null && board.piece(pos2).Color != Color))
                     {
                         mat[pos2.Row, pos2.Column] = true;

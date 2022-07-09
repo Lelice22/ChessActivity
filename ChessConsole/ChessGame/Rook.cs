@@ -17,73 +17,55 @@ namespace ChessGame
         public override bool[,] PossibleMovements(Position position)
         {
             bool[,] mat = new bool[board.Rows, board.Columns];
-            int inicialrow = position.Row;
-            int inicialcolumn = position.Column;
-            
             //Uppway
-            if (position.Row > 0) {  
-            position.SetPosition(position.Row - 1, position.Column);
-                while (board.ValidPosition(position) && AllowedMove(position))
-                {
-                    mat[position.Row, position.Column] = true;
-                    if (board.piece(position) != null && board.piece(position).Color != Color)
-                    {
-                        position.Row = inicialrow;
-                        break;
-                    }
-                    position.Row -= 1;
-                }
-            }
-            //Downway
-            position.Row = inicialrow;
-            if (position.Row < 8)
+            //Uppway
+            Position pos = new Position(position.Row - 1, position.Column);
+            while (board.ValidPosition(pos) && AllowedMove(pos))
             {
-                position.SetPosition(position.Row + 1, position.Column);
-                while (board.ValidPosition(position) && AllowedMove(position))
+                mat[pos.Row, pos.Column] = true;
+                if (board.piece(pos) != null && board.piece(pos).Color != Color)
                 {
-                    mat[position.Row, position.Column] = true;
-                    if (board.piece(position) != null && board.piece(position).Color != Color)
-                    {
-                        position.Row = inicialrow;
-                        break;
-                    }
-                    position.Row += 1;
+                    break;
                 }
+                pos.Row--;
+            }
 
-            }
-            //Leftway
-            position.Row = inicialrow;
-            if (position.Column > 0)
-            {
-                position.SetPosition(position.Row, position.Column - 1);
-                while (board.ValidPosition(position) && AllowedMove(position))
-                {
-                    mat[position.Row, position.Column] = true;
-                    if (board.piece(position) != null && board.piece(position).Color != Color)
-                    {
-                        position.Column = inicialcolumn;
-                        break;
-                    }
-                    position.Column -= 1;
-                }
-            }
             //Downway
-            position.Column = inicialcolumn;
-            if (position.Column < 8)
+            pos = new Position(position.Row + 1, position.Column);
+            while (board.ValidPosition(pos) && AllowedMove(pos))
             {
-                position.SetPosition(position.Row, position.Column + 1);
-                while (board.ValidPosition(position) && AllowedMove(position))
+                mat[pos.Row, pos.Column] = true;
+                if (board.piece(pos) != null && board.piece(pos).Color != Color)
                 {
-                    mat[position.Row, position.Column] = true;
-                    if (board.piece(position) != null && board.piece(position).Color != Color)
-                    {
-                        position.Column = inicialcolumn;
-                        break;
-                    }
-                    position.Column += 1;
+                    break;
                 }
+                pos.Row++;
             }
-            position.Column = inicialcolumn;
+
+            //Leftway
+            pos = new Position(position.Row, position.Column - 1);
+            while (board.ValidPosition(pos) && AllowedMove(pos))
+            {
+                mat[pos.Row, pos.Column] = true;
+                if (board.piece(pos) != null && board.piece(pos).Color != Color)
+                {
+                    break;
+                }
+                pos.Column--;
+            }
+
+
+            //Rightway
+            pos = new Position(position.Row, position.Column + 1);
+            while (board.ValidPosition(pos) && AllowedMove(pos))
+            {
+                mat[pos.Row, pos.Column] = true;
+                if (board.piece(pos) != null && board.piece(pos).Color != Color)
+                {
+                    break;
+                }
+                pos.Column++;
+            }
             return mat;
         }
     }

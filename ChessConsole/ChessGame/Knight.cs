@@ -18,23 +18,17 @@ namespace ChessGame
         public override bool[,] PossibleMovements(Position position)
         {
             bool[,] mat = new bool[board.Rows, board.Columns];
-            int inicialrow = position.Row;
-            int inicialcolumn = position.Column;
 
             for (int i = -1; i < 2; i += 2)
             {
-                int row = inicialrow + i;
-                int column2 = inicialcolumn + i;
                 for (int j = -2; j < 3; j = j + 4)
                 {
-                    int column = inicialcolumn + j;
-                    int row2 = inicialrow + j;
-                    Position pos = new Position(row, column);
+                    Position pos = new Position(position.Row + i, position.Column + j);
                     if (board.ValidPosition(pos) && AllowedMove(pos))
                     {
                         mat[pos.Row, pos.Column] = true;
                     }
-                    Position pos2 = new Position(row2, column2);
+                    Position pos2 = new Position(position.Row + j, position.Column + i);
                     if (board.ValidPosition(pos2) && AllowedMove(pos2))
                     {
                         mat[pos2.Row, pos2.Column] = true;
