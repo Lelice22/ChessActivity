@@ -223,14 +223,39 @@ namespace ChessGame
         }
         private void SetPiece()
         {
-            SetNewPiece('d', 1, new Rook(PieceColor.Black, board));
-            SetNewPiece('c', 2, new Rook(PieceColor.White, board));
-            SetNewPiece('h', 4, new King(PieceColor.Black, board));
-            SetNewPiece('g', 8, new King(PieceColor.White, board));
-            SetNewPiece('b', 7, new Rook(PieceColor.Black, board));
-            SetNewPiece('c', 3, new Rook(PieceColor.Black, board));
+            SetNewPiece('a', 8, new Rook(PieceColor.Black, board));
+            SetNewPiece('b', 8, new Knight(PieceColor.Black, board));
+            SetNewPiece('c', 8, new Bishop(PieceColor.Black, board));
+            SetNewPiece('d', 8, new Queen(PieceColor.Black, board));
+            SetNewPiece('e', 8, new King(PieceColor.Black, board));
+            SetNewPiece('f', 8, new Bishop(PieceColor.Black, board));
+            SetNewPiece('g', 8, new Knight(PieceColor.Black, board));
+            SetNewPiece('h', 8, new Rook(PieceColor.Black, board));
+            SetNewPiece('a', 7, new Pawn(PieceColor.Black, board));
+            SetNewPiece('b', 7, new Pawn(PieceColor.Black, board));
+            SetNewPiece('c', 7, new Pawn(PieceColor.Black, board));
+            SetNewPiece('d', 7, new Pawn(PieceColor.Black, board));
+            SetNewPiece('e', 7, new Pawn(PieceColor.Black, board));
+            SetNewPiece('f', 7, new Pawn(PieceColor.Black, board));
+            SetNewPiece('g', 7, new Pawn(PieceColor.Black, board));
+            SetNewPiece('h', 7, new Pawn(PieceColor.Black, board));
 
-
+            SetNewPiece('a', 1, new Rook(PieceColor.White, board));
+            SetNewPiece('b', 1, new Knight(PieceColor.White, board));
+            SetNewPiece('c', 1, new Bishop(PieceColor.White, board));
+            SetNewPiece('d', 1, new Queen(PieceColor.White, board));
+            SetNewPiece('e', 1, new King(PieceColor.White, board));
+            SetNewPiece('f', 1, new Bishop(PieceColor.White, board));
+            SetNewPiece('g', 1, new Knight(PieceColor.White, board));
+            SetNewPiece('h', 1, new Rook(PieceColor.White, board));
+            SetNewPiece('a', 2, new Pawn(PieceColor.White, board));
+            SetNewPiece('b', 2, new Pawn(PieceColor.White, board));
+            SetNewPiece('c', 2, new Pawn(PieceColor.White, board));
+            SetNewPiece('d', 2, new Pawn(PieceColor.White, board));
+            SetNewPiece('e', 2, new Pawn(PieceColor.White, board));
+            SetNewPiece('f', 2, new Pawn(PieceColor.White, board));
+            SetNewPiece('g', 2, new Pawn(PieceColor.White, board));
+            SetNewPiece('h', 2, new Pawn(PieceColor.White, board));
         }
     }
 }

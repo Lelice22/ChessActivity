@@ -5,84 +5,97 @@ using BoardG.Enums;
 
 namespace ChessGame
 {
-    internal class Rook : Piece
+    internal class Bishop : Piece
     {
-        public Rook(PieceColor color, Board board) : base(color, board)
+        public Bishop(PieceColor color, Board board) : base(color, board)
         {
         }
         public override string ToString()
         {
-            return "R";
+            return "B";
         }
         public override bool[,] PossibleMovements(Position position)
         {
             bool[,] mat = new bool[board.Rows, board.Columns];
             int inicialrow = position.Row;
             int inicialcolumn = position.Column;
-            
-            //Uppway
-            if (position.Row > 0) {  
-            position.SetPosition(position.Row - 1, position.Column);
+            //Upprightway
+            if (position.Row > 0 && position.Column < 7)
+            {
+                position.SetPosition(position.Row - 1, position.Column + 1);
                 while (board.ValidPosition(position) && AllowedMove(position))
                 {
                     mat[position.Row, position.Column] = true;
                     if (board.piece(position) != null && board.piece(position).Color != Color)
                     {
                         position.Row = inicialrow;
+                        position.Column = inicialcolumn;
                         break;
                     }
-                    position.Row -= 1;
+                    position.Row--;
+                    position.Column++;
+
                 }
             }
-            //Downway
+            //Downrigthway
             position.Row = inicialrow;
-            if (position.Row < 8)
+            position.Column = inicialcolumn;
+            if (position.Row < 7 && position.Column < 7)
             {
-                position.SetPosition(position.Row + 1, position.Column);
+                position.SetPosition(position.Row + 1, position.Column + 1);
                 while (board.ValidPosition(position) && AllowedMove(position))
                 {
-                    mat[position.Row, position.Column] = true;
+                    mat[position.Row, position.Column] = true; 
                     if (board.piece(position) != null && board.piece(position).Color != Color)
                     {
                         position.Row = inicialrow;
+                        position.Column = inicialcolumn;
                         break;
                     }
-                    position.Row += 1;
+                    position.Row++;
+                    position.Column++;
                 }
 
             }
-            //Leftway
+            //Uppleftway
             position.Row = inicialrow;
-            if (position.Column > 0)
-            {
-                position.SetPosition(position.Row, position.Column - 1);
-                while (board.ValidPosition(position) && AllowedMove(position))
-                {
-                    mat[position.Row, position.Column] = true;
-                    if (board.piece(position) != null && board.piece(position).Color != Color)
-                    {
-                        position.Column = inicialcolumn;
-                        break;
-                    }
-                    position.Column -= 1;
-                }
-            }
-            //Downway
             position.Column = inicialcolumn;
-            if (position.Column < 8)
+            if (position.Row > 0 && position.Column > 0)
             {
-                position.SetPosition(position.Row, position.Column + 1);
+                position.SetPosition(position.Row - 1, position.Column - 1);
                 while (board.ValidPosition(position) && AllowedMove(position))
                 {
                     mat[position.Row, position.Column] = true;
                     if (board.piece(position) != null && board.piece(position).Color != Color)
                     {
+                        position.Row = inicialrow;
                         position.Column = inicialcolumn;
                         break;
                     }
-                    position.Column += 1;
+                    position.Row--;
+                    position.Column--;
                 }
             }
+            //Downleftway
+            position.Row = inicialrow;
+            position.Column = inicialcolumn;
+            if (position.Row < 7 && position.Column > 0)
+            {
+                position.SetPosition(position.Row + 1, position.Column - 1);
+                while (board.ValidPosition(position) && AllowedMove(position))
+                {
+                    mat[position.Row, position.Column] = true;
+                    if (board.piece(position) != null && board.piece(position).Color != Color)
+                    {
+                        position.Row = inicialrow;
+                        position.Column = inicialcolumn;
+                        break;
+                    }
+                    position.Row++;
+                    position.Column--;
+                }
+            }
+            position.Row = inicialrow;
             position.Column = inicialcolumn;
             return mat;
         }
