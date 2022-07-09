@@ -4,7 +4,7 @@ using BoardG.Enums;
 
 namespace BoardG
 {
-    internal class Piece
+    abstract class Piece
     {
         public Position position { get; set; }
         public PieceColor Color { get; protected set; }
@@ -23,6 +23,12 @@ namespace BoardG
         {
             NumberofMovements++;
         }
+        public bool AllowedMove(Position position)
+        {
+            Piece piece = board.piece(position);
+            return piece == null || piece.Color != Color;
+        }
+        public abstract bool[,] PossibleMovements(Position position);
    
     }
 }

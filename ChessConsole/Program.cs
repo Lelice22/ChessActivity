@@ -17,9 +17,17 @@ namespace ChessConsole
                 while (!match.Fininshed)
                 {
                     Console.Clear();
-                    Screen.ShowBoard(match.board);
+                    Screen.ShowBoardBegin(match.board);
+
+                    Console.WriteLine();
                     Console.Write("Origin: ");
                     Position origin = Screen.ReadChessPosition().ChesstoMatrix();
+
+                    bool[,] possiblemovements = match.board.piece(origin).PossibleMovements(origin);
+
+                    //Console.Clear();
+                    Screen.ShowBoard(match.board, possiblemovements);
+
                     Console.Write("Final position: ");
                     Position final = Screen.ReadChessPosition().ChesstoMatrix();
 

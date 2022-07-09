@@ -13,6 +13,12 @@ namespace BoardG
             Row = row;
             Column = column;
         }
+
+        public void SetPosition(int row, int column)
+        {
+            Row = row;
+            Column = column;
+        }
         public override string ToString()
         {
             return $"{Row}, {Column}";
