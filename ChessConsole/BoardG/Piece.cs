@@ -23,10 +23,30 @@ namespace BoardG
         {
             NumberofMovements++;
         }
+        public bool AnyPossibleMovements()
+        {
+            bool[,] mat = PossibleMovements(position);
+            for (int i = 0; i < board.Rows; i++)
+            {
+                for (int j = 0; j < board.Columns; j++)
+                {
+                    if (mat[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         public bool AllowedMove(Position position)
         {
             Piece piece = board.piece(position);
             return piece == null || piece.Color != Color;
+        }
+        public bool PossibleMove(Position position)
+        {
+            //Recheck.. it seems weirdly redundant
+            return PossibleMovements(position)[position.Row, position.Column];
         }
         public abstract bool[,] PossibleMovements(Position position);
    

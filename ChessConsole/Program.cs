@@ -16,22 +16,35 @@ namespace ChessConsole
 
                 while (!match.Fininshed)
                 {
-                    Console.Clear();
-                    Screen.ShowBoardBegin(match.board);
+                    try
+                    {
+                        Console.Clear();
+                        Screen.ShowBoardBegin(match.board);
+                        Console.WriteLine();
+                        Console.WriteLine($"Shift: {match.Shift}");
+                        Console.WriteLine($"Awayting for move : {match.PresentPlayer}");
 
-                    Console.WriteLine();
-                    Console.Write("Origin: ");
-                    Position origin = Screen.ReadChessPosition().ChesstoMatrix();
+                        Console.WriteLine();
+                        Console.Write("Origin: ");
+                        Position origin = Screen.ReadChessPosition().ChesstoMatrix();
+                        match.ValidateOrigin(origin);
 
-                    bool[,] possiblemovements = match.board.piece(origin).PossibleMovements(origin);
+                        bool[,] possiblemovements = match.board.piece(origin).PossibleMovements(origin);
 
-                    //Console.Clear();
-                    Screen.ShowBoard(match.board, possiblemovements);
+                        Console.Clear();
+                        Screen.ShowBoard(match.board, possiblemovements);
 
-                    Console.Write("Final position: ");
-                    Position final = Screen.ReadChessPosition().ChesstoMatrix();
+                        Console.Write("Final position: ");
+                        Position final = Screen.ReadChessPosition().ChesstoMatrix();
+                        match.ValidateFinalPosition(origin, final);
 
-                    match.MakeMove(origin, final);
+                        match.MakePlay(origin, final);
+                    }
+                    catch (ExceptionBoard e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.ReadLine();
+                    }
                 }
 
             }
