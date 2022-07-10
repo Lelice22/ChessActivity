@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BoardG;
 using BoardG.Enums;
+using ChessConsole;
 
 namespace ChessGame
 {
@@ -14,6 +15,8 @@ namespace ChessGame
         private HashSet<Piece> Captured;
         public bool Check { get; private set; }
         public Piece EnPassantSusceptible { get; private set; }
+        public Screen screen;
+
 
         public ChessMatch()
         {
@@ -25,6 +28,7 @@ namespace ChessGame
             Captured = new HashSet<Piece>();
             Check = false;
             EnPassantSusceptible = null;
+            screen = new Screen();
             SetPiece();
         }
 
@@ -109,6 +113,17 @@ namespace ChessGame
         public void MakePlay(Position origin, Position final)
         {
             Piece capturedPiece = MakeMove(origin, final);
+            Piece p = board.piece(final);
+            //Special move: Promotion
+            if(p is Pawn && (p.Color == PieceColor.White && final.Row == 0) || (p.Color == PieceColor.Black && final.Row == 7))
+            {
+                p = board.RemovePiece(final);
+                pieces.Remove(p);
+                Piece newpiece = ChooseNewPiece(p.Color);
+                board.SetPiece(newpiece, final);
+                pieces.Add(newpiece);
+
+            }
 
             if (InCheck(PresentPlayer))
             {
@@ -133,7 +148,6 @@ namespace ChessGame
                 changePlayer();
             }
 
-            Piece p = board.piece(final);
             //Special move : En Passant
             if (p is Pawn && (final.Row == origin.Row - 2 || final.Row == origin.Row + 2))
             {
@@ -143,6 +157,30 @@ namespace ChessGame
             {
                 EnPassantSusceptible = null;
             }
+        }
+
+        public Piece ChooseNewPiece(PieceColor color)
+        {
+            Piece newpiece = null;
+
+            char c = screen.ShowChooseNewPiece();
+            if (c == 'Q')
+            {
+                newpiece = new Queen(color, board);
+            }
+            if (c == 'R')
+            {
+                newpiece = new Rook(color, board);
+            }
+            if (c == 'B')
+            {
+                newpiece = new Bishop(color, board);
+            }
+            if (c == 'N')
+            {
+                newpiece = new Knight(color, board);
+            }
+            return newpiece;
         }
         public void ValidateOrigin(Position position)
         {

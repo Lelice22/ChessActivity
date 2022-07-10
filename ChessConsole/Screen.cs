@@ -132,5 +132,17 @@ namespace ChessConsole
             }
 
         }
+
+        public char ShowChooseNewPiece()
+        {
+            Console.WriteLine("Choose new piece");
+            Console.WriteLine("'Q' for new Queen");
+            Console.WriteLine("'R' for new Rook");
+            Console.WriteLine("'B' for new Bishop");
+            Console.WriteLine("'N' for new Knight");
+            Console.Write(">>>");
+            char c = char.Parse(Console.ReadLine());
+            return c;
+        }
     }
 }
