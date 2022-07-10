@@ -13,6 +13,7 @@ namespace ChessGame
         private HashSet<Piece> pieces;
         private HashSet<Piece> Captured;
         public bool Check { get; private set; }
+        public Piece EnPassantSusceptible { get; private set; }
 
         public ChessMatch()
         {
@@ -23,6 +24,7 @@ namespace ChessGame
             pieces = new HashSet<Piece>();
             Captured = new HashSet<Piece>();
             Check = false;
+            EnPassantSusceptible = null;
             SetPiece();
         }
 
@@ -37,7 +39,7 @@ namespace ChessGame
                 Captured.Add(capturedPiece);
             }
 
-            //SpecialMove: Castle
+            //Special move: Castle
             //Kingside Castle
             if (piece is King && final.Column == origin.Column + 2)
             {
@@ -52,6 +54,16 @@ namespace ChessGame
                 Position finalR = new Position(origin.Row, origin.Column - 1);
                 MakeMove(originR, finalR);
             }
+
+            //Special move : En Passant
+            if (piece is Pawn && origin.Column != final.Column && capturedPiece == null)
+            {
+                Position poscapturedP = new Position(origin.Row, final.Column);
+                capturedPiece = board.RemovePiece(poscapturedP);
+                Captured.Add(capturedPiece);
+            }
+
+
             return capturedPiece;
         }
 
@@ -60,20 +72,21 @@ namespace ChessGame
             
             Piece piece = board.RemovePiece(final);
             piece.SubtractNumberOfMovements();
-            if (capturePiece != null)
+            if (capturePiece != null && capturePiece == EnPassantSusceptible)
             {
                 board.SetPiece(capturePiece, final);
                 Captured.Remove(capturePiece);
             }
             board.RemovePiece(origin);
             board.SetPiece(piece, origin);
-            //SpecialMove: Castle
+            //Special move: Castle
             //Kingside Castle
             if (piece is King && final.Column == origin.Column + 2)
             {
                 Position originR = new Position(origin.Row, origin.Column + 3);
                 Position finalR = new Position(origin.Row, origin.Column + 1);
                 UndoMovement(originR, finalR, null);
+
             }
             //Queenside Castle
             if (piece is King && final.Column == origin.Column - 2)
@@ -81,6 +94,16 @@ namespace ChessGame
                 Position originR = new Position(origin.Row, origin.Column - 4);
                 Position finalR = new Position(origin.Row, origin.Column - 1);
                 UndoMovement(originR, finalR, null);
+            }
+            //Special move : En Passant
+            if (piece is Pawn && origin.Column != final.Column && capturePiece == EnPassantSusceptible)
+            {
+
+                Piece capPawn = board.RemovePiece(final);
+                Position capPawninicial = new Position(origin.Row, final.Column);
+                board.SetPiece(capPawn, capPawninicial);
+                piece.SubtractNumberOfMovements();
+
             }
         }
         public void MakePlay(Position origin, Position final)
@@ -108,6 +131,17 @@ namespace ChessGame
             {
                 Shift++;
                 changePlayer();
+            }
+
+            Piece p = board.piece(final);
+            //Special move : En Passant
+            if (p is Pawn && (final.Row == origin.Row - 2 || final.Row == origin.Row + 2))
+            {
+                EnPassantSusceptible = p;
+            }
+            else
+            {
+                EnPassantSusceptible = null;
             }
         }
         public void ValidateOrigin(Position position)
@@ -261,14 +295,14 @@ namespace ChessGame
             SetNewPiece('f', 8, new Bishop(PieceColor.Black, board));
             SetNewPiece('g', 8, new Knight(PieceColor.Black, board));
             SetNewPiece('h', 8, new Rook(PieceColor.Black, board));
-            SetNewPiece('a', 7, new Pawn(PieceColor.Black, board));
-            SetNewPiece('b', 7, new Pawn(PieceColor.Black, board));
-            SetNewPiece('c', 7, new Pawn(PieceColor.Black, board));
-            SetNewPiece('d', 7, new Pawn(PieceColor.Black, board));
-            SetNewPiece('e', 7, new Pawn(PieceColor.Black, board));
-            SetNewPiece('f', 7, new Pawn(PieceColor.Black, board));
-            SetNewPiece('g', 7, new Pawn(PieceColor.Black, board));
-            SetNewPiece('h', 7, new Pawn(PieceColor.Black, board));
+            SetNewPiece('a', 7, new Pawn(PieceColor.Black, board, this));
+            SetNewPiece('b', 7, new Pawn(PieceColor.Black, board, this));
+            SetNewPiece('c', 7, new Pawn(PieceColor.Black, board, this));
+            SetNewPiece('d', 7, new Pawn(PieceColor.Black, board, this));
+            SetNewPiece('e', 7, new Pawn(PieceColor.Black, board, this));
+            SetNewPiece('f', 7, new Pawn(PieceColor.Black, board, this));
+            SetNewPiece('g', 7, new Pawn(PieceColor.Black, board, this));
+            SetNewPiece('h', 7, new Pawn(PieceColor.Black, board, this));
 
             SetNewPiece('a', 1, new Rook(PieceColor.White, board));
             SetNewPiece('b', 1, new Knight(PieceColor.White, board));
@@ -278,14 +312,14 @@ namespace ChessGame
             SetNewPiece('f', 1, new Bishop(PieceColor.White, board));
             SetNewPiece('g', 1, new Knight(PieceColor.White, board));
             SetNewPiece('h', 1, new Rook(PieceColor.White, board));
-            SetNewPiece('a', 2, new Pawn(PieceColor.White, board));
-            SetNewPiece('b', 2, new Pawn(PieceColor.White, board));
-            SetNewPiece('c', 2, new Pawn(PieceColor.White, board));
-            SetNewPiece('d', 2, new Pawn(PieceColor.White, board));
-            SetNewPiece('e', 2, new Pawn(PieceColor.White, board));
-            SetNewPiece('f', 2, new Pawn(PieceColor.White, board));
-            SetNewPiece('g', 2, new Pawn(PieceColor.White, board));
-            SetNewPiece('h', 2, new Pawn(PieceColor.White, board));
+            SetNewPiece('a', 2, new Pawn(PieceColor.White, board, this));
+            SetNewPiece('b', 2, new Pawn(PieceColor.White, board, this));
+            SetNewPiece('c', 2, new Pawn(PieceColor.White, board, this));
+            SetNewPiece('d', 2, new Pawn(PieceColor.White, board, this));
+            SetNewPiece('e', 2, new Pawn(PieceColor.White, board, this));
+            SetNewPiece('f', 2, new Pawn(PieceColor.White, board, this));
+            SetNewPiece('g', 2, new Pawn(PieceColor.White, board, this));
+            SetNewPiece('h', 2, new Pawn(PieceColor.White, board, this));
         }
     }
 }

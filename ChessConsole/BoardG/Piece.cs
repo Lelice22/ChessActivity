@@ -25,7 +25,7 @@ namespace BoardG
         }
         public void SubtractNumberOfMovements()
         {
-            NumberofMovements++;
+            NumberofMovements--;
         }
         public bool AnyPossibleMovements()
         {
